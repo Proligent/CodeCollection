@@ -44,7 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\clsUtility.cs" />
+    <Compile Include="Common\clsProcess.cs" />
+    <Compile Include="Common\clsUtil.cs" />
     <Compile Include="FrmMain.cs">
       <SubType>Form</SubType>
     </Compile>

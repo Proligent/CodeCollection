@@ -51,6 +51,55 @@ namespace CodeCollection
 
         #region Property
 
+        public int BaudRate
+        {
+            set
+            {
+                _serialPort.BaudRate = value;
+            }
+            get
+            {
+                return _serialPort.BaudRate;
+            }
+        }
+
+        public bool DtrEnable
+        {
+            set
+            {
+                _serialPort.DtrEnable = value;
+            }
+            get
+            {
+                return _serialPort.DtrEnable;
+            }
+        }
+
+        public bool RtsEnable
+        {
+            set
+            {
+                _serialPort.RtsEnable = value;
+            }
+            get
+            {
+                return _serialPort.RtsEnable;
+            }
+        }
+
+        public Handshake Handshake
+        {
+            set
+            {
+                _serialPort.Handshake = value;
+            }
+            get
+            {
+                return _serialPort.Handshake;
+            }
+        }
+
+
         public bool IsOpen
         {
             get
@@ -84,6 +133,10 @@ namespace CodeCollection
             _serialPort.Parity = serialSetting.Parity;
             _serialPort.DataBits = serialSetting.DataBits;
             _serialPort.StopBits = serialSetting.StopBits;
+
+            _serialPort.DtrEnable = true;   // DTR
+            _serialPort.RtsEnable = true;   // RTS
+            _serialPort.Handshake = Handshake.None; // Handshake
         }
 
         public SerialPortInterface(string portName, int baudRate, Parity parity, int dataBits, StopBits stopBits)
@@ -91,9 +144,13 @@ namespace CodeCollection
             _serialPort = new SerialPort();
             _serialPort.PortName = portName;
             _serialPort.BaudRate = baudRate;
-            _serialPort.Parity = parity;
+            _serialPort.Parity   = parity;
             _serialPort.DataBits = dataBits;
             _serialPort.StopBits = stopBits;
+
+            _serialPort.DtrEnable = true;   // DTR
+            _serialPort.RtsEnable = true;   // RTS
+            _serialPort.Handshake = Handshake.None; // Handshake
         }
 
 
