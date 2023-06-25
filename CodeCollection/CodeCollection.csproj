@@ -32,6 +32,48 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>Lib\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="libnodave.net">
+      <HintPath>Lib\libnodave.net.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>Lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="mdbsmnglib">
+      <HintPath>Lib\mdbsmnglib.dll</HintPath>
+    </Reference>
+    <Reference Include="MDCS">
+      <HintPath>Lib\MDCS.dll</HintPath>
+    </Reference>
+    <Reference Include="MDCS.XmlSerializers">
+      <HintPath>Lib\MDCS.XmlSerializers.dll</HintPath>
+    </Reference>
+    <Reference Include="Modbus">
+      <HintPath>Lib\Modbus.dll</HintPath>
+    </Reference>
+    <Reference Include="modbus_hon">
+      <HintPath>Lib\modbus_hon.dll</HintPath>
+    </Reference>
+    <Reference Include="NationalInstruments.Common, Version=19.1.40.49152, Culture=neutral, PublicKeyToken=dc6ad606294fc298, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\NationalInstruments.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="NationalInstruments.DAQmx, Version=22.8.45.49361, Culture=neutral, PublicKeyToken=4febd62461bf11a4, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\NationalInstruments.DAQmx.dll</HintPath>
+    </Reference>
+    <Reference Include="NationalInstruments.NI4882">
+      <HintPath>Lib\NationalInstruments.NI4882.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SmartFactory.ExternalDLL">
+      <HintPath>Lib\SmartFactory.ExternalDLL.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,16 +84,31 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WinTcpS7_1K">
+      <HintPath>Lib\WinTcpS7_1K.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\clsProcess.cs" />
+    <Compile Include="Common\clsADB.cs" />
+    <Compile Include="Common\clsIniFile.cs" />
+    <Compile Include="Common\clsIPMAC.cs" />
+    <Compile Include="Common\clsMDCS.cs" />
+    <Compile Include="Common\clsUploadMES.cs" />
     <Compile Include="Common\clsUtil.cs" />
+    <Compile Include="Common\clsWinProcess.cs" />
     <Compile Include="FrmMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmMain.Designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logger\Logger.cs" />
+    <Compile Include="NI\clsDaqmx.cs" />
+    <Compile Include="NI\clsNI6001.cs" />
+    <Compile Include="NI\clsNI6251.cs" />
+    <Compile Include="NI\clsNI6259.cs" />
+    <Compile Include="PLC\clsPLCDaveHelper.cs" />
+    <Compile Include="PLC\CPLCDave.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SerialPort\SerialPortInterface.cs" />
@@ -67,6 +124,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Logger\log4net.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -80,8 +138,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Socket\" />
+    <Content Include="NI\README.txt" />
+    <Content Include="SerialPort\README.txt" />
+    <Content Include="Socket\README.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

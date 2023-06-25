@@ -15,11 +15,11 @@ namespace CodeCollection
 
         public enum BaudRate
         {
-            BR9600 = 9600,
-            BR14400 = 14400,
-            BR19200 = 19200,
-            BR38400 = 38400,
-            BR57600 = 57600,
+            BR9600   = 9600,
+            BR14400  = 14400,
+            BR19200  = 19200,
+            BR38400  = 38400,
+            BR57600  = 57600,
             BR115200 = 115200,
             BR128000 = 128000
         }
@@ -39,10 +39,9 @@ namespace CodeCollection
 
         #endregion
 
-
         #region Variable
 
-        public string strErrorMessage;
+        public string sErrorMessage;  
         private System.IO.Ports.SerialPort _serialPort;
 
 
@@ -51,7 +50,7 @@ namespace CodeCollection
 
         #region Property
 
-        public int BaudRate
+        public int Baud
         {
             set
             {
@@ -99,7 +98,6 @@ namespace CodeCollection
             }
         }
 
-
         public bool IsOpen
         {
             get
@@ -112,7 +110,7 @@ namespace CodeCollection
         {
             get
             {
-                return strErrorMessage;
+                return sErrorMessage;
             }
         }
 
@@ -192,7 +190,7 @@ namespace CodeCollection
             }
             catch (Exception ex)
             {
-                strErrorMessage = "Exception:" + ex.Message;
+                sErrorMessage = "Exception:" + ex.Message;
                 return false;
             }
 
@@ -216,7 +214,7 @@ namespace CodeCollection
             }
             catch (Exception ex)
             {
-                strErrorMessage = "Exception:" + ex.Message;
+                sErrorMessage = "Exception:" + ex.Message;
                 return false;
             }
 
