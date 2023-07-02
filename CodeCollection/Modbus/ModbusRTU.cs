@@ -3,29 +3,13 @@ using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-
 
 namespace CodeCollection
 {
-    class SerialPortInterface
+    class ModbusRTU
     {
-
-        #region Enum
-
-        public enum BaudRate
-        {
-            BR9600   = 9600,
-            BR14400  = 14400,
-            BR19200  = 19200,
-            BR38400  = 38400,
-            BR57600  = 57600,
-            BR115200 = 115200,
-            BR128000 = 128000
-        }
-
-        #endregion
-
         #region Struct
 
         public struct SerialSetting
@@ -41,68 +25,12 @@ namespace CodeCollection
 
         #region Variable
 
-        public string strErrorMessage;  
+        private string strErrorMessage;
         private SerialPort _serialPort = null;
 
         #endregion
 
         #region Property
-
-        public int Baud
-        {
-            set
-            {
-                _serialPort.BaudRate = value;
-            }
-            get
-            {
-                return _serialPort.BaudRate;
-            }
-        }
-
-        public bool DtrEnable
-        {
-            set
-            {
-                _serialPort.DtrEnable = value;
-            }
-            get
-            {
-                return _serialPort.DtrEnable;
-            }
-        }
-
-        public bool RtsEnable
-        {
-            set
-            {
-                _serialPort.RtsEnable = value;
-            }
-            get
-            {
-                return _serialPort.RtsEnable;
-            }
-        }
-
-        public Handshake Handshake
-        {
-            set
-            {
-                _serialPort.Handshake = value;
-            }
-            get
-            {
-                return _serialPort.Handshake;
-            }
-        }
-
-        public bool IsOpen
-        {
-            get
-            {
-                return _serialPort.IsOpen;
-            }
-        }
 
         public string ErrorMessage
         {
@@ -116,9 +44,10 @@ namespace CodeCollection
 
         #region Construct
 
-        public SerialPortInterface(SerialSetting serialSetting)
+        public ModbusRTU(SerialSetting serialSetting)
         {
             strErrorMessage = "";
+
             _serialPort = new SerialPort();
             _serialPort.PortName = serialSetting.PortName;
             _serialPort.BaudRate = serialSetting.BaudRate;
@@ -128,16 +57,17 @@ namespace CodeCollection
 
             _serialPort.DtrEnable = true;   // DTR
             _serialPort.RtsEnable = true;   // RTS
-            _serialPort.Handshake = Handshake.None; // Handshake
+            _serialPort.Handshake = Handshake.None; // Handshake  
         }
 
-        public SerialPortInterface(string portName, int baudRate, Parity parity, int dataBits, StopBits stopBits)
+        public ModbusRTU(string portName, int baudRate, Parity parity, int dataBits, StopBits stopBits)
         {
             strErrorMessage = "";
+
             _serialPort = new SerialPort();
             _serialPort.PortName = portName;
             _serialPort.BaudRate = baudRate;
-            _serialPort.Parity   = parity;
+            _serialPort.Parity = parity;
             _serialPort.DataBits = dataBits;
             _serialPort.StopBits = stopBits;
 
@@ -146,7 +76,7 @@ namespace CodeCollection
             _serialPort.Handshake = Handshake.None; // Handshake
         }
 
-        ~SerialPortInterface()
+        ~ModbusRTU()
         {
             if (_serialPort != null && _serialPort.IsOpen)
             {
@@ -159,11 +89,11 @@ namespace CodeCollection
 
         #region Function
 
-
-        protected bool Open()
+        public bool Open()
         {
             try
             {
+                // If the serialport is already open, close the port
                 if (_serialPort.IsOpen)
                 {
                     _serialPort.Close();
@@ -188,7 +118,7 @@ namespace CodeCollection
             return true;
         }
 
-        protected bool Close()
+        public bool Close()
         {
             try
             {
@@ -215,38 +145,67 @@ namespace CodeCollection
 
 
 
-        // Query
-        protected bool Query()
+
+
+        // 读取保持型寄存器
+        public byte[] ReadRegisters(int slaveId, ushort startAddress, ushort count)
         {
 
+            try
+            {
+                // 拼接报文
+                List<byte> SendCmd = new List<byte>();
 
+                // 从站地址 + 功能码 + 起始高位 + 起始低位 + 数量高位 + 数量低位 + CRC校验
+                SendCmd.Add((byte)slaveId);
+                SendCmd.Add(0x03);
+                SendCmd.Add((byte)(startAddress / 256));
+                SendCmd.Add((byte)(startAddress % 256));
+                SendCmd.Add((byte)(count / 256));
+                SendCmd.Add((byte)(count % 256));
 
-            return true;
+                byte[] crc = CRC16(SendCmd.ToArray(), 6);
+                SendCmd.AddRange(crc);
+
+                // 发送报文
+                _serialPort.Write(SendCmd.ToArray(), 0, SendCmd.Count());
+
+                // 接收报文
+                Thread.Sleep(100);
+                byte[] buffer = new byte[_serialPort.BytesToRead];
+                _serialPort.Read(buffer, 0, buffer.Length);
+
+                // 验证报文   
+                if (CheckCRC(buffer))
+                {
+
+                }
+
+                // 解析报文
+                byte[] result = new byte[count * 2];
+
+                Array.Copy(buffer, 3, result, 0, count * 2);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                strErrorMessage = "Exception:" + ex.Message;
+
+            }
+
         }
 
 
 
-        // Read
-        protected bool Read()
-        {
 
-            return true;
-        }
 
-        // Write
-        protected bool Write()
-        {
 
-            return true;
-        }
+
 
 
         #endregion
 
 
-
-
     }
-
-
 }

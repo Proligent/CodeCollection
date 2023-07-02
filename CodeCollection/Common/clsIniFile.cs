@@ -37,12 +37,11 @@ namespace CodeCollection
 
         public clsIniFile()
         {
-
         }
 
         public clsIniFile(string strFileName)
         {
-            _FileName = strFileName;
+            this._FileName = strFileName;
         }
 
         #endregion
@@ -134,7 +133,7 @@ namespace CodeCollection
         }
         #endregion
 
-        #region ReadFload
+        #region ReadFloat
         /// <summary>
         /// 返回float型的数
         /// </summary>

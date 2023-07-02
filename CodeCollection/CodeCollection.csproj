@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\clsADB.cs" />
+    <Compile Include="Common\clsCRC.cs" />
     <Compile Include="Common\clsIniFile.cs" />
     <Compile Include="Common\clsIPMAC.cs" />
     <Compile Include="Common\clsMDCS.cs" />
@@ -103,6 +104,8 @@
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Logger\Logger.cs" />
+    <Compile Include="Modbus\ModbusRTU.cs" />
+    <Compile Include="Modbus\OMModbus.cs" />
     <Compile Include="NI\clsDaqmx.cs" />
     <Compile Include="NI\clsNI6001.cs" />
     <Compile Include="NI\clsNI6251.cs" />
