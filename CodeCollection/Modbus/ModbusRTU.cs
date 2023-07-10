@@ -164,8 +164,8 @@ namespace CodeCollection
                 SendCmd.Add((byte)(count / 256));
                 SendCmd.Add((byte)(count % 256));
 
-                byte[] crc = CRC16(SendCmd.ToArray(), 6);
-                SendCmd.AddRange(crc);
+                //byte[] crc = CRC16(SendCmd.ToArray(), 6);
+                //SendCmd.AddRange(crc);
 
                 // 发送报文
                 _serialPort.Write(SendCmd.ToArray(), 0, SendCmd.Count());
@@ -176,10 +176,10 @@ namespace CodeCollection
                 _serialPort.Read(buffer, 0, buffer.Length);
 
                 // 验证报文   
-                if (CheckCRC(buffer))
-                {
+                //if (CheckCRC(buffer))
+                //{
 
-                }
+                //}
 
                 // 解析报文
                 byte[] result = new byte[count * 2];
@@ -191,9 +191,8 @@ namespace CodeCollection
             catch (Exception ex)
             {
                 strErrorMessage = "Exception:" + ex.Message;
-
+                return null;
             }
-
         }
 
 

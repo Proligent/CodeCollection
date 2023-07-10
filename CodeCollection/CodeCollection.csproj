@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EasyModbus">
+      <HintPath>Lib\EasyModbus.dll</HintPath>
+    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>Lib\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
@@ -104,12 +107,14 @@
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Logger\Logger.cs" />
+    <Compile Include="Modbus\clsMINASA6.cs" />
     <Compile Include="Modbus\ModbusRTU.cs" />
     <Compile Include="Modbus\OMModbus.cs" />
     <Compile Include="NI\clsDaqmx.cs" />
     <Compile Include="NI\clsNI6001.cs" />
     <Compile Include="NI\clsNI6251.cs" />
     <Compile Include="NI\clsNI6259.cs" />
+    <Compile Include="NI\clsNICard.cs" />
     <Compile Include="PLC\clsPLCDaveHelper.cs" />
     <Compile Include="PLC\CPLCDave.cs" />
     <Compile Include="Program.cs" />

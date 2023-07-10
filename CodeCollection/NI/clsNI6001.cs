@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CodeCollection
 {
-    class clsNI6001
+    class clsNI6001 : clsNICard
     {
 
 
